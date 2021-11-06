@@ -63,4 +63,4 @@ def is_account_verified(db: Session, user_id: int):
         .first()
     ):
         return True
-    raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Account not activated")
+    raise HTTPException(status.HTTP_400_BAD_REQUEST, "Account not activated")

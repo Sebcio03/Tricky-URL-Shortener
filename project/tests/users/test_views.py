@@ -1,5 +1,3 @@
-import json
-
 import requests
 
 
@@ -35,7 +33,7 @@ class TestUserViews:
                 "use_case": "Personal use",
             },
         )
-        assert response.status_code == 401
+        assert response.status_code == 400
         assert response.json() == {"detail": "Email already exists"}
 
     def test_resend_code(self, client):
@@ -57,7 +55,7 @@ class TestUserViews:
         response = client.post(
             "/users/tokens", json={"email": "user1@example.com", "password": "string"}
         )
-        assert response.status_code == 401
+        assert response.status_code == 400
         assert response.json() == {"detail": "Account not activated"}
 
     def test_verify_user_with_wrong_code(self, client):
@@ -65,7 +63,7 @@ class TestUserViews:
             "/users/code",
             json={"email": "user1@example.com", "code": "123"},
         )
-        assert response.status_code == 401
+        assert response.status_code == 400
         assert response.json() == {"detail": "User doesn't exists, or code invalid"}
 
     def test_verify_user_success(self, client):

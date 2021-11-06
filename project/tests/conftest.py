@@ -32,23 +32,3 @@ def client(db):
     finally:
         db.rollback()
         db.commit()
-
-
-# @pytest.fixture()
-# def create_verified_user(create_basic_user):
-#     emails = requests.get("http://test_smtp:8025/api/v2/messages").json()["items"]
-#     last_email_body_subject = emails[0]["Content"]["Headers"]["Subject"][0]
-#     code = last_email_body_subject.split("code ")[1]
-#     response = client.post(
-#         "/users/code",
-#         json={"email": "user@example.com", "code": code},
-#     )
-#     return response
-
-
-# @pytest.fixture()
-# def user_tokens(create_verified_user):
-#     response = client.post(
-#         "/users/tokens", json={"email": "user@example.com", "password": "string"}
-#     )
-#     return response.json()

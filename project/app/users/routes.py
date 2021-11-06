@@ -1,6 +1,5 @@
 import pyotp
-from fastapi import (APIRouter, BackgroundTasks, Depends, HTTPException,
-                     Response, status)
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Response, status
 from fastapi_jwt_auth import AuthJWT
 from sqlalchemy.orm import Session
 
@@ -10,8 +9,13 @@ from app.users.authentication import authenticate_user
 from app.users.email import send_account_verification_mail
 from app.users.middleware import login_required
 from app.users.models import UserModel
-from app.users.schemas import (EmailSchema, UserDataSchema, UserSigninSchema,
-                               UserSignupSchema, UserVerifyWithTOTPSchema)
+from app.users.schemas import (
+    EmailSchema,
+    UserDataSchema,
+    UserSigninSchema,
+    UserSignupSchema,
+    UserVerifyWithTOTPSchema,
+)
 
 router = APIRouter(prefix="/users", tags=["Signup"])
 
@@ -31,7 +35,7 @@ async def sign_up(
     db: Session = Depends(get_db),
 ):
     if crud.get_user_by_email(db, user.email):
-        raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Email already exists")
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Email already exists")
 
     user = crud.create_user(db, user)
     if user:
@@ -53,7 +57,7 @@ async def verify_account_with_totp(
     totp = pyotp.TOTP(user.secret)
     if not user or not totp.verify(user_credentials.code):
         raise HTTPException(
-            status.HTTP_401_UNAUTHORIZED, "User doesn't exists, or code invalid"
+            status.HTTP_400_BAD_REQUEST, "User doesn't exists, or code invalid"
         )
     if user.is_active:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "User is already activated")
@@ -91,7 +95,7 @@ async def get_jwt_tokens(
     user = authenticate_user(db, form_data.email, form_data.password)
     if not user:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
+            status_code=status.HTTP_400_BAD_REQUEST,
             detail="Could not validate credetials",
             headers={"WWW-Authenticate": "Bearer"},
         )
