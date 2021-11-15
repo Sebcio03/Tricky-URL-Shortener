@@ -1,9 +1,10 @@
-import json
-import requests
-from app.users.crud import get_user_by_email
-from tests.conftest import TestingSessionLocal
-import pyotp
 from time import sleep
+
+import pyotp
+import requests
+from tests.conftest import TestingSessionLocal
+
+from app.users.crud import get_user_by_email
 from app.users.models import UserModel
 
 

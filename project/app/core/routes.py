@@ -1,5 +1,4 @@
-from fastapi import (APIRouter, BackgroundTasks, Depends, HTTPException,
-                     Request, status)
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request, status
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm.session import Session
 

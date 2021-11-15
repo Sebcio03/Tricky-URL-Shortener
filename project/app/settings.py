@@ -14,11 +14,11 @@ ALGORITHM = "HS256"
 
 DATABASE_CREDENTIALS = {
     "drivername": "postgresql+psycopg2",
-    "username": os.environ["POSTGRES_USER"],
-    "password": os.environ["POSTGRES_PASSWORD"],
-    "host": os.environ["POSTGRES_HOST"],
-    "port": os.environ["POSTGRES_PORT"],
-    "database": os.environ["POSTGRES_DB"],
+    "username": os.environ.get("POSTGRES_USER", "postgres"),
+    "password": os.environ.get("POSTGRES_PASSWORD", "postgres"),
+    "host": os.environ.get("POSTGRES_HOST", "db"),
+    "port": os.environ.get("POSTGRES_PORT", 5432),
+    "database": os.environ.get("POSTGRES_DB", "postgres"),
 }
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
