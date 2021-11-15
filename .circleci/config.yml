@@ -1,9 +1,9 @@
 version: 2.1
 
 jobs:
-  build-and-test:
-    executor:
-      name: ubuntu-2004:202010-01
+  build_and_test:
+    machine:
+      image: ubuntu-2004:202107-02
     steps:
       - checkout
       - run:
@@ -18,4 +18,4 @@ jobs:
 workflows:
   main:
     jobs:
-      - build-and-test
+      - build_and_test
